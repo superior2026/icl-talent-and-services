@@ -37,11 +37,11 @@ function Contact() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const parsed = schema.safeParse(Object.fromEntries(new FormData(e.currentTarget)));
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) { toast.error(parsed.error.issues[0]?.message ?? "Check the form"); return; }
     setBusy(true);
-    const { error } = await supabase.from("service_requests").insert(parsed.data);
+    const { error } = await supabase.from("service_requests").insert({ ...parsed.data, phone: parsed.data.phone || null, company: parsed.data.company || null });
     setBusy(false);
-    if (error) return toast.error("Could not send your request. Please try again.");
+    if (error) { toast.error("Could not send your request. Please try again."); return; }
     setDone(true);
   }
 

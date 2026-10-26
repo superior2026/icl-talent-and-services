@@ -44,7 +44,7 @@ function Index() {
         </div>
         <div className="mt-12 grid gap-px overflow-hidden rounded-lg border bg-border md:grid-cols-2 lg:grid-cols-4">
           {SERVICES.map((s, i) => {
-            const Icon = icons[i];
+            const Icon = icons[i] ?? Building2;
             return (
               <div key={s.slug} className="bg-card p-8">
                 <Icon className="h-7 w-7 text-brass" />

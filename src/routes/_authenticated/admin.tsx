@@ -49,29 +49,30 @@ function Admin() {
   const profileOf = (id: string) => profiles.find((p) => p.id === id);
 
   async function openCv(path: string | null) {
-    if (!path) return toast.error("No CV attached");
+    if (!path) { toast.error("No CV attached"); return; }
     const { data, error } = await supabase.storage.from("cvs").createSignedUrl(path, 300);
-    if (error || !data) return toast.error("Could not open CV");
+    if (error || !data) { toast.error("Could not open CV"); return; }
     window.open(data.signedUrl, "_blank");
   }
 
   async function saveJob(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
+    const fd = new FormData(e.currentTarget);
+    const g = (k: string) => String(fd.get(k) ?? "").trim();
     const row = {
-      title: f.title, company: f.company || "ICL Group Client", location: f.location, job_type: f.job_type || "Full-time",
-      category: f.category || "General", salary: f.salary || null, description: f.description, requirements: f.requirements || null,
-      deadline: f.deadline || null, is_published: editing?.is_published ?? true,
+      title: g("title"), company: g("company") || "ICL Group Client", location: g("location"), job_type: g("job_type") || "Full-time",
+      category: g("category") || "General", salary: g("salary") || null, description: g("description"), requirements: g("requirements") || null,
+      deadline: g("deadline") || null, is_published: editing?.is_published ?? true,
     };
     const { error } = editing?.id ? await supabase.from("jobs").update(row).eq("id", editing.id) : await supabase.from("jobs").insert(row);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Vacancy saved"); setEditing(null); load();
   }
 
   async function del(table: "jobs" | "service_requests" | "applications", id: string) {
     if (!confirm("Delete this item?")) return;
     const { error } = await supabase.from(table).delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     load();
   }
 

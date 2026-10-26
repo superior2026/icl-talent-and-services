@@ -35,7 +35,7 @@ function Services() {
               <p className="mt-3 text-muted-foreground">{s.text}</p>
             </div>
             <ul className="space-y-2 text-sm">
-              {details[s.slug].map((d) => <li key={d} className="border-b pb-2">{d}</li>)}
+              {(details[s.slug] ?? []).map((d) => <li key={d} className="border-b pb-2">{d}</li>)}
             </ul>
           </div>
         ))}

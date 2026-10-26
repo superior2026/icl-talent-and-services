@@ -28,23 +28,24 @@ function Account() {
 
   async function save(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = Object.fromEntries(new FormData(e.currentTarget)) as Record<string, string>;
-    const upd = { full_name: f.full_name.slice(0, 120), phone: f.phone.slice(0, 40), location: f.location.slice(0, 120), headline: f.headline.slice(0, 200) };
+    const fd = new FormData(e.currentTarget);
+    const g = (k: string) => String(fd.get(k) ?? "").trim();
+    const upd = { full_name: g("full_name").slice(0, 120), phone: g("phone").slice(0, 40), location: g("location").slice(0, 120), headline: g("headline").slice(0, 200) };
     const { error } = await supabase.from("profiles").update(upd).eq("id", user.id);
-    if (error) return toast.error("Could not save profile");
+    if (error) { toast.error("Could not save profile"); return; }
     setP((prev) => (prev ? { ...prev, ...upd } : prev));
     toast.success("Profile saved");
   }
 
   async function uploadCv(file: File) {
-    if (file.size > 5 * 1024 * 1024) return toast.error("CV must be under 5MB");
-    if (!/\.(pdf|docx?)$/i.test(file.name)) return toast.error("Upload a PDF or Word document");
+    if (file.size > 5 * 1024 * 1024) { toast.error("CV must be under 5MB"); return; }
+    if (!/\.(pdf|docx?)$/i.test(file.name)) { toast.error("Upload a PDF or Word document"); return; }
     setUploading(true);
     const path = `${user.id}/${Date.now()}-${file.name.replace(/[^\w.-]/g, "_")}`;
     const { error } = await supabase.storage.from("cvs").upload(path, file);
     if (!error) await supabase.from("profiles").update({ cv_path: path, cv_name: file.name }).eq("id", user.id);
     setUploading(false);
-    if (error) return toast.error("Upload failed");
+    if (error) { toast.error("Upload failed"); return; }
     setP((prev) => (prev ? { ...prev, cv_path: path, cv_name: file.name } : prev));
     toast.success("CV uploaded");
   }

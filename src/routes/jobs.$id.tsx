@@ -59,7 +59,7 @@ function JobDetail() {
     setBusy(true);
     const { error } = await supabase.from("applications").insert({ job_id: id, user_id: user.id, cover_letter: cover.slice(0, 4000), cv_path: cvPath });
     setBusy(false);
-    if (error) return toast.error("Could not submit application.");
+    if (error) { toast.error("Could not submit application."); return; }
     setApplied(true);
     toast.success("Application submitted");
   }
