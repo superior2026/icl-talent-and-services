@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
+import { COMPANY } from "@/lib/site-content";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin, useUser } from "@/lib/auth";
@@ -67,23 +68,41 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const socials = [
+    { href: COMPANY.socials.linkedin, label: "LinkedIn", Icon: Linkedin },
+    { href: COMPANY.socials.x, label: "X", Icon: Twitter },
+    { href: COMPANY.socials.facebook, label: "Facebook", Icon: Facebook },
+    { href: COMPANY.socials.instagram, label: "Instagram", Icon: Instagram },
+  ];
   return (
     <footer className="bg-ink-gradient text-ink-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
-        <div className="md:col-span-2">
+        <div>
           <p className="font-display text-3xl">ICL Group</p>
-          <p className="mt-3 max-w-sm text-sm opacity-70">Consulting, recruitment, outsourcing and corporate support — built around the people who run your business.</p>
+          <p className="mt-3 max-w-sm text-sm opacity-70">Connecting talent, empowering businesses, driving growth.</p>
+          <div className="mt-5 flex gap-3">
+            {socials.map(({ href, label, Icon }) => (
+              <a key={label} href={href} aria-label={label} className="rounded-full border border-ink-foreground/20 p-2 opacity-80 hover:opacity-100"><Icon className="h-4 w-4" /></a>
+            ))}
+          </div>
         </div>
         <div className="space-y-2 text-sm">
           <p className="eyebrow">Company</p>
-          <Link to="/services" className="block opacity-80 hover:opacity-100">Services</Link>
           <Link to="/about" className="block opacity-80 hover:opacity-100">About</Link>
-          <Link to="/jobs" className="block opacity-80 hover:opacity-100">Vacancies</Link>
+          <Link to="/services" className="block opacity-80 hover:opacity-100">Services</Link>
+          <Link to="/contact" className="block opacity-80 hover:opacity-100">Request a service</Link>
         </div>
         <div className="space-y-2 text-sm">
-          <p className="eyebrow">Get in touch</p>
-          <Link to="/contact" className="block opacity-80 hover:opacity-100">Request a service</Link>
-          <Link to="/auth" className="block opacity-80 hover:opacity-100">Candidate sign in</Link>
+          <p className="eyebrow">Candidates</p>
+          <Link to="/jobs" className="block opacity-80 hover:opacity-100">Vacancies</Link>
+          <Link to="/auth" className="block opacity-80 hover:opacity-100">Sign in / Register</Link>
+          <Link to="/account" className="block opacity-80 hover:opacity-100">My account</Link>
+        </div>
+        <div className="space-y-2 text-sm opacity-80">
+          <p className="eyebrow">Contact</p>
+          <p>{COMPANY.phone}</p>
+          <p>{COMPANY.email}</p>
+          <p>{COMPANY.address}</p>
         </div>
       </div>
       <div className="border-t border-ink-foreground/10 py-5 text-center text-xs opacity-60">© {new Date().getFullYear()} ICL Group. All rights reserved.</div>
