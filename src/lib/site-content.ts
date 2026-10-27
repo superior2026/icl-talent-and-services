@@ -58,7 +58,7 @@ export const INSIGHTS = [
 
 export const FAQS = [
   { q: "How do I apply for a vacancy?", a: "Create a free account, upload your CV and click Apply on any open role. You can track your application in My Account." },
-  { q: "How can my company post a job?", a: "Use the Post a Job button or our request form and choose Recruitment. Our team will contact you to agree the brief." },
+  { q: "How can my company post a job?", a: "Use the Post a Job button and fill in the vacancy form. Our team will contact you to confirm the details." },
   { q: "Do you charge job seekers?", a: "No. Creating an account and applying for jobs is free for candidates." },
   { q: "Which services can I request?", a: "Consulting, recruitment, outsourcing, payroll, HR, training, compliance and back-office support." },
   { q: "How quickly will you respond?", a: "Our team reviews every request and aims to respond promptly during business hours." },

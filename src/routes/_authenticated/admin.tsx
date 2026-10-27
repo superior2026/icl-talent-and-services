@@ -27,22 +27,27 @@ export const Route = createFileRoute("/_authenticated/admin")({
 
 const APP_STATUSES = ["submitted", "reviewing", "shortlisted", "interview", "offered", "rejected"];
 const REQ_STATUSES = ["new", "contacted", "in progress", "closed"];
+const POST_STATUSES = ["new", "contacted", "approved", "published", "declined"];
+type Post = Database["public"]["Tables"]["job_post_requests"]["Row"];
 
 function Admin() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [reqs, setReqs] = useState<Req[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [apps, setApps] = useState<App[]>([]);
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [editing, setEditing] = useState<Partial<Job> | null>(null);
+  const [tab, setTab] = useState("requests");
 
   const load = useCallback(async () => {
-    const [j, r, a, p] = await Promise.all([
+    const [j, r, a, p, jp] = await Promise.all([
       supabase.from("jobs").select("*").order("created_at", { ascending: false }),
       supabase.from("service_requests").select("*").order("created_at", { ascending: false }),
       supabase.from("applications").select("*, jobs(title)").order("created_at", { ascending: false }),
       supabase.from("profiles").select("*").order("created_at", { ascending: false }),
+      supabase.from("job_post_requests").select("*").order("created_at", { ascending: false }),
     ]);
-    setJobs(j.data ?? []); setReqs(r.data ?? []); setApps((a.data as App[]) ?? []); setProfiles(p.data ?? []);
+    setJobs(j.data ?? []); setReqs(r.data ?? []); setApps((a.data as App[]) ?? []); setProfiles(p.data ?? []); setPosts(jp.data ?? []);
   }, []);
   useEffect(() => { load(); }, [load]);
 
@@ -69,7 +74,7 @@ function Admin() {
     toast.success("Vacancy saved"); setEditing(null); load();
   }
 
-  async function del(table: "jobs" | "service_requests" | "applications", id: string) {
+  async function del(table: "jobs" | "service_requests" | "applications" | "job_post_requests", id: string) {
     if (!confirm("Delete this item?")) return;
     const { error } = await supabase.from(table).delete().eq("id", id);
     if (error) { toast.error(error.message); return; }
@@ -80,6 +85,7 @@ function Admin() {
     ["Open vacancies", jobs.filter((j) => j.is_published).length],
     ["Applications", apps.length],
     ["New requests", reqs.filter((r) => r.status === "new").length],
+    ["New job posts", posts.filter((r) => r.status === "new").length],
     ["Registered users", profiles.length],
   ];
 
@@ -87,19 +93,51 @@ function Admin() {
     <div className="mx-auto max-w-7xl px-6 py-14">
       <p className="eyebrow">Admin</p>
       <h1 className="mt-2 text-4xl">Dashboard</h1>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {stats.map(([l, v]) => (
           <div key={l} className="rounded-lg border bg-card p-5"><p className="text-sm text-muted-foreground">{l}</p><p className="mt-2 font-display text-4xl">{v}</p></div>
         ))}
       </div>
 
-      <Tabs defaultValue="requests" className="mt-10">
+      <Tabs value={tab} onValueChange={setTab} className="mt-10">
         <TabsList>
           <TabsTrigger value="requests">Service requests</TabsTrigger>
           <TabsTrigger value="applications">Applications</TabsTrigger>
+          <TabsTrigger value="jobposts">Job post requests</TabsTrigger>
           <TabsTrigger value="jobs">Vacancies</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="jobposts" className="mt-6 space-y-3">
+          {posts.map((r) => (
+            <div key={r.id} className="rounded-lg border bg-card p-5">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p className="font-semibold">{r.job_title} <span className="text-muted-foreground">· {r.company}</span></p>
+                  <p className="text-sm text-muted-foreground">{r.contact_name} · {r.email}{r.phone && ` · ${r.phone}`} · {new Date(r.created_at).toLocaleString()}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <Badge variant="secondary">{r.location}</Badge><Badge variant="outline">{r.job_type}</Badge>
+                    <Badge variant="outline">{r.openings} opening{r.openings > 1 ? "s" : ""}</Badge>
+                    {r.salary && <Badge variant="outline">{r.salary}</Badge>}
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <select value={r.status} onChange={async (e) => { await supabase.from("job_post_requests").update({ status: e.target.value }).eq("id", r.id); load(); }} className="h-8 rounded-md border bg-background px-2 text-sm capitalize">
+                    {POST_STATUSES.map((s) => <option key={s}>{s}</option>)}
+                  </select>
+                  <Button size="sm" variant="outline" onClick={() => {
+                    setEditing({ title: r.job_title, company: r.company, location: r.location, job_type: r.job_type, salary: r.salary, description: r.description, requirements: r.requirements, is_published: false });
+                    setTab("jobs");
+                  }}>Create vacancy</Button>
+                  <Button size="sm" variant="ghost" onClick={() => del("job_post_requests", r.id)}>Delete</Button>
+                </div>
+              </div>
+              <p className="mt-3 whitespace-pre-line text-sm">{r.description}</p>
+              {r.requirements && <p className="mt-2 whitespace-pre-line text-sm text-muted-foreground">{r.requirements}</p>}
+            </div>
+          ))}
+          {posts.length === 0 && <p className="text-muted-foreground">No job post requests yet.</p>}
+        </TabsContent>
 
         <TabsContent value="requests" className="mt-6 space-y-3">
           {reqs.map((r) => (
