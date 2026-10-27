@@ -93,7 +93,7 @@ function Index() {
           <p className="mt-6 max-w-xl text-lg opacity-80">ICL Group helps job seekers find the right roles and helps organisations hire, advise and run their operations with confidence.</p>
           <div className="mt-10 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-brass text-accent-foreground hover:bg-brass/90"><Link to="/jobs">Find a Job <ArrowRight /></Link></Button>
-            <Button asChild size="lg" variant="outline" className="border-ink-foreground/40 bg-transparent text-ink-foreground hover:bg-ink-foreground/10"><Link to="/contact">Post a Job</Link></Button>
+            <Button asChild size="lg" variant="outline" className="border-ink-foreground/40 bg-transparent text-ink-foreground hover:bg-ink-foreground/10"><Link to="/post-job">Post a Job</Link></Button>
             <Button asChild size="lg" variant="outline" className="border-ink-foreground/40 bg-transparent text-ink-foreground hover:bg-ink-foreground/10"><Link to="/services">Explore Our Services</Link></Button>
             <Button asChild size="lg" variant="outline" className="border-ink-foreground/40 bg-transparent text-ink-foreground hover:bg-ink-foreground/10"><Link to="/contact">Request a Consultation</Link></Button>
           </div>

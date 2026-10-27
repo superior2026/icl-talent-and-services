@@ -52,6 +52,57 @@ export type Database = {
           },
         ]
       }
+      job_post_requests: {
+        Row: {
+          company: string
+          contact_name: string
+          created_at: string
+          description: string
+          email: string
+          id: string
+          job_title: string
+          job_type: string
+          location: string
+          openings: number
+          phone: string | null
+          requirements: string | null
+          salary: string | null
+          status: string
+        }
+        Insert: {
+          company: string
+          contact_name: string
+          created_at?: string
+          description: string
+          email: string
+          id?: string
+          job_title: string
+          job_type?: string
+          location: string
+          openings?: number
+          phone?: string | null
+          requirements?: string | null
+          salary?: string | null
+          status?: string
+        }
+        Update: {
+          company?: string
+          contact_name?: string
+          created_at?: string
+          description?: string
+          email?: string
+          id?: string
+          job_title?: string
+          job_type?: string
+          location?: string
+          openings?: number
+          phone?: string | null
+          requirements?: string | null
+          salary?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
       jobs: {
         Row: {
           category: string

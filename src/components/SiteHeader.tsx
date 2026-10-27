@@ -91,6 +91,7 @@ export function SiteFooter() {
           <Link to="/about" className="block opacity-80 hover:opacity-100">About</Link>
           <Link to="/services" className="block opacity-80 hover:opacity-100">Services</Link>
           <Link to="/contact" className="block opacity-80 hover:opacity-100">Request a service</Link>
+          <Link to="/post-job" className="block opacity-80 hover:opacity-100">Post a job</Link>
         </div>
         <div className="space-y-2 text-sm">
           <p className="eyebrow">Candidates</p>
