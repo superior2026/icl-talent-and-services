@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Section } from "@/components/Section";
 import hero from "@/assets/hero.jpg";
+
 import { supabase } from "@/integrations/supabase/client";
 import { COMPANY, CORE_SERVICES, FAQS, INDUSTRIES, INSIGHTS, PROCESS, STATS, TESTIMONIALS, WHY_US } from "@/lib/site-content";
 
@@ -24,17 +26,6 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-function Section({ eyebrow, title, children, className = "" }: { eyebrow: string; title: string; children: React.ReactNode; className?: string }) {
-  return (
-    <section className={className}>
-      <div className="mx-auto max-w-7xl px-6 py-20">
-        <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">{title}</h2>
-        <div className="mt-12">{children}</div>
-      </div>
-    </section>
-  );
-}
 
 function FeaturedJobs() {
   const { data } = useQuery({
@@ -105,7 +96,7 @@ function Index() {
           <p className="eyebrow">Who we are</p>
           <h2 className="mt-3 text-4xl">A partner for people and organisations.</h2>
           <p className="mt-5 text-muted-foreground">ICL Group brings together business consulting, recruitment, staff outsourcing and corporate support. We work alongside leadership teams to solve challenges, find talent and keep essential functions running smoothly.</p>
-          <Button asChild variant="link" className="mt-4 px-0"><Link to="/about">More about us →</Link></Button>
+          <Button asChild variant="link" className="mt-4 px-0"><Link to="/about">More about the company →</Link></Button>
         </div>
         <div>
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border bg-border">

@@ -7,11 +7,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin, useUser } from "@/lib/auth";
 
 const nav = [
-  { to: "/services", label: "Services" },
+  { to: "/about", label: "Company" },
+  { to: "/services", label: "What We Do" },
   { to: "/jobs", label: "Vacancies" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Request a Service" },
+  { to: "/contact", label: "Contact Us" },
 ] as const;
+
 
 export function SiteHeader() {
   const { user } = useUser();
@@ -88,9 +89,10 @@ export function SiteFooter() {
         </div>
         <div className="space-y-2 text-sm">
           <p className="eyebrow">Company</p>
-          <Link to="/about" className="block opacity-80 hover:opacity-100">About</Link>
-          <Link to="/services" className="block opacity-80 hover:opacity-100">Services</Link>
-          <Link to="/contact" className="block opacity-80 hover:opacity-100">Request a service</Link>
+          <Link to="/about" className="block opacity-80 hover:opacity-100">Who we are</Link>
+          <Link to="/services" className="block opacity-80 hover:opacity-100">What we do</Link>
+          <Link to="/contact" className="block opacity-80 hover:opacity-100">Contact us</Link>
+
           <Link to="/post-job" className="block opacity-80 hover:opacity-100">Post a job</Link>
         </div>
         <div className="space-y-2 text-sm">
