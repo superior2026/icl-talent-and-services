@@ -134,15 +134,16 @@ function Contact() {
               <p className="font-medium">Office location</p>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              [Map placeholder] — a map of the office will appear here once the real address in{" "}
-              <code className="rounded bg-secondary px-1 py-0.5 text-xs">src/lib/site-content.ts</code> is confirmed.
+              Placeholder — once the real office address is confirmed, a map of that location will appear here.
             </p>
           </div>
 
           <p className="mt-6 text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">Response times are placeholders.</span> Confirm your own
-            commitment before launch, then update the questions below to match.
+            <span className="font-medium text-foreground">These details are placeholders.</span> Send your real phone
+            number, email, office address, opening hours and response promise and they will replace these everywhere
+            on the site.
           </p>
+
         </div>
 
         <div>
