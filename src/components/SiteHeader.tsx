@@ -31,7 +31,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link to="/" className="flex items-center" aria-label="ICL Group — home">
-          <img src={logoAsset.url} alt="ICL Group — passion for excellence" className="h-12 w-auto md:h-14" />
+          <img src={logoAsset.url} alt="ICL Group" className="h-12 w-auto md:h-14" />
         </Link>
         <nav className="hidden items-center gap-7 md:flex">
           {nav.map((n) => (
@@ -80,7 +80,7 @@ export function SiteFooter() {
     <footer className="bg-ink-gradient text-ink-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
-          <img src={logoLightAsset.url} alt="ICL Group — passion for excellence" className="h-24 w-auto md:h-28" />
+          <img src={logoLightAsset.url} alt="ICL Group" className="h-24 w-auto md:h-28" />
           <p className="mt-4 max-w-sm text-sm opacity-70">Connecting talent, empowering businesses, driving growth.</p>
           <div className="mt-5 flex gap-3">
             {socials.map(({ href, label, Icon }) => (
