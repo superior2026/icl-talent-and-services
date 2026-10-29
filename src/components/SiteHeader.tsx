@@ -5,6 +5,8 @@ import { COMPANY } from "@/lib/site-content";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin, useUser } from "@/lib/auth";
+import logoAsset from "@/assets/icl-logo.png.asset.json";
+import logoLightAsset from "@/assets/icl-logo-light.png.asset.json";
 
 const nav = [
   { to: "/about", label: "Company" },
@@ -28,9 +30,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link to="/" className="flex items-baseline gap-2">
-          <span className="font-display text-2xl font-semibold text-primary">ICL</span>
-          <span className="eyebrow">Group</span>
+        <Link to="/" className="flex items-center" aria-label="ICL Group — home">
+          <img src={logoAsset.url} alt="ICL Group — passion for excellence" className="h-12 w-auto md:h-14" />
         </Link>
         <nav className="hidden items-center gap-7 md:flex">
           {nav.map((n) => (
@@ -79,8 +80,8 @@ export function SiteFooter() {
     <footer className="bg-ink-gradient text-ink-foreground">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
-          <p className="font-display text-3xl">ICL Group</p>
-          <p className="mt-3 max-w-sm text-sm opacity-70">Connecting talent, empowering businesses, driving growth.</p>
+          <img src={logoLightAsset.url} alt="ICL Group — passion for excellence" className="h-24 w-auto md:h-28" />
+          <p className="mt-4 max-w-sm text-sm opacity-70">Connecting talent, empowering businesses, driving growth.</p>
           <div className="mt-5 flex gap-3">
             {socials.map(({ href, label, Icon }) => (
               <a key={label} href={href} aria-label={label} className="rounded-full border border-ink-foreground/20 p-2 opacity-80 hover:opacity-100"><Icon className="h-4 w-4" /></a>
