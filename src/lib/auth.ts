@@ -33,9 +33,4 @@ export function useIsAdmin(userId?: string) {
   return isAdmin;
 }
 
-export const SERVICES = [
-  { slug: "consulting", title: "Business Consulting", text: "Strategy, restructuring, process improvement and growth advisory for ambitious organisations." },
-  { slug: "recruitment", title: "Recruitment & Executive Search", text: "Rigorous sourcing and assessment of talent — from graduate trainees to C-suite leaders." },
-  { slug: "outsourcing", title: "Staff Outsourcing", text: "Fully managed outsourced teams, payroll and HR administration so you can focus on your core." },
-  { slug: "corporate", title: "Corporate Support Services", text: "Company secretarial, compliance, training and back-office support delivered with precision." },
-];
+export { CORE_SERVICES as SERVICES } from "@/lib/site-content";

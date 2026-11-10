@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      customer_reviews: {
+        Row: {
+          author_name: string
+          author_role: string
+          created_at: string
+          id: string
+          is_approved: boolean
+          quote: string
+          rating: number
+          sort_order: number
+        }
+        Insert: {
+          author_name: string
+          author_role: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          quote: string
+          rating?: number
+          sort_order?: number
+        }
+        Update: {
+          author_name?: string
+          author_role?: string
+          created_at?: string
+          id?: string
+          is_approved?: boolean
+          quote?: string
+          rating?: number
+          sort_order?: number
+        }
+        Relationships: []
+      }
       applications: {
         Row: {
           cover_letter: string | null

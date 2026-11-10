@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { FadeLeft, FadeRight, HeroItem, HeroReveal } from "@/components/motion";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/post-job")({
@@ -58,39 +59,63 @@ function PostJob() {
 
   return (
     <div className="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-[1fr_1.4fr]">
-      <div>
-        <p className="eyebrow">For employers</p>
-        <h1 className="mt-3 text-5xl">Post a job with ICL Group.</h1>
-        <p className="mt-6 text-muted-foreground">Tell us about the role. Our recruitment team will review it, confirm the details with you and advertise it to candidates.</p>
-      </div>
-      {done ? (
-        <div className="rounded-lg border bg-card p-10">
-          <h2 className="text-3xl">Vacancy received.</h2>
-          <p className="mt-3 text-muted-foreground">Thank you. A recruiter will contact you to confirm the details before the role goes live.</p>
-        </div>
-      ) : (
-        <form onSubmit={onSubmit} className="grid gap-5 rounded-lg border bg-card p-8 sm:grid-cols-2">
-          <p className="eyebrow sm:col-span-2">Your details</p>
-          {f("contact_name", "Contact name *", { required: true, maxLength: 120 })}
-          {f("company", "Company *", { required: true, maxLength: 160 })}
-          {f("email", "Email *", { type: "email", required: true, maxLength: 255 })}
-          {f("phone", "Phone", { maxLength: 40 })}
-          <p className="eyebrow mt-4 sm:col-span-2">The role</p>
-          {f("job_title", "Job title *", { required: true, maxLength: 160 })}
-          {f("location", "Location *", { required: true, maxLength: 160 })}
-          <div className="space-y-2">
-            <Label htmlFor="job_type">Job type *</Label>
-            <select id="job_type" name="job_type" className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
-              {TYPES.map((t) => <option key={t}>{t}</option>)}
-            </select>
+      <FadeLeft>
+        <HeroReveal>
+          <HeroItem>
+            <p className="eyebrow">For employers</p>
+          </HeroItem>
+          <HeroItem>
+            <h1 className="mt-3 text-5xl">Post a job with ICL Group.</h1>
+          </HeroItem>
+          <HeroItem>
+            <p className="mt-6 text-muted-foreground">
+              Tell us about the role. Our recruitment team will review it, confirm the details with you and advertise it to candidates.
+            </p>
+          </HeroItem>
+        </HeroReveal>
+      </FadeLeft>
+      <FadeRight>
+        {done ? (
+          <div className="rounded-lg border bg-card p-10">
+            <h2 className="text-3xl">Vacancy received.</h2>
+            <p className="mt-3 text-muted-foreground">
+              Thank you. A recruiter will contact you to confirm the details before the role goes live.
+            </p>
           </div>
-          {f("openings", "Number of openings *", { type: "number", min: 1, max: 1000, defaultValue: 1, required: true })}
-          <div className="sm:col-span-2">{f("salary", "Salary range", { maxLength: 120 })}</div>
-          <div className="space-y-2 sm:col-span-2"><Label htmlFor="description">Job description *</Label><Textarea id="description" name="description" rows={6} required maxLength={5000} /></div>
-          <div className="space-y-2 sm:col-span-2"><Label htmlFor="requirements">Requirements</Label><Textarea id="requirements" name="requirements" rows={4} maxLength={5000} /></div>
-          <Button type="submit" size="lg" disabled={busy} className="sm:col-span-2">{busy ? "Sending…" : "Submit vacancy"}</Button>
-        </form>
-      )}
+        ) : (
+          <form onSubmit={onSubmit} className="grid gap-5 rounded-lg border bg-card p-8 sm:grid-cols-2">
+            <p className="eyebrow sm:col-span-2">Your details</p>
+            {f("contact_name", "Contact name *", { required: true, maxLength: 120 })}
+            {f("company", "Company *", { required: true, maxLength: 160 })}
+            {f("email", "Email *", { type: "email", required: true, maxLength: 255 })}
+            {f("phone", "Phone", { maxLength: 40 })}
+            <p className="eyebrow mt-4 sm:col-span-2">The role</p>
+            {f("job_title", "Job title *", { required: true, maxLength: 160 })}
+            {f("location", "Location *", { required: true, maxLength: 160 })}
+            <div className="space-y-2">
+              <Label htmlFor="job_type">Job type *</Label>
+              <select id="job_type" name="job_type" className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
+                {TYPES.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+            </div>
+            {f("openings", "Number of openings *", { type: "number", min: 1, max: 1000, defaultValue: 1, required: true })}
+            <div className="sm:col-span-2">{f("salary", "Salary range", { maxLength: 120 })}</div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="description">Job description *</Label>
+              <Textarea id="description" name="description" rows={6} required maxLength={5000} />
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="requirements">Requirements</Label>
+              <Textarea id="requirements" name="requirements" rows={4} maxLength={5000} />
+            </div>
+            <Button type="submit" size="lg" disabled={busy} className="sm:col-span-2">
+              {busy ? "Sending…" : "Submit vacancy"}
+            </Button>
+          </form>
+        )}
+      </FadeRight>
     </div>
   );
 }

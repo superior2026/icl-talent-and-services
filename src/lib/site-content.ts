@@ -1,36 +1,73 @@
-// Editable placeholder content. Replace with real company details before launch.
 export const COMPANY = {
-  phone: "+234 000 000 0000",
-  email: "hello@example.com",
-  address: "Office address, City, Country",
-  hours: "Mon–Fri, 9:00–17:00",
+  phone: "+234-817 073 2700",
+  email: "infossl@iclgroupng.com",
+  address: "26B, Oyedele Ogunniyi Street, By Prince of Anthony Hotel, Anthony Village, Lagos, Nigeria.",
+  hours: "10:00 - 17:00",
   socials: { linkedin: "#", x: "#", facebook: "#", instagram: "#" },
 };
 
 // Placeholder statistics — labelled as such on the page. Replace with verified figures.
 export const STATS = [
-  { value: "[00]+", label: "Years of experience" },
-  { value: "[000]+", label: "Clients served" },
-  { value: "[000]+", label: "Candidates placed" },
-  { value: "[00]", label: "Industries covered" },
+  { value: 15, suffix: "+", label: "Years of experience" },
+  { value: 200, suffix: "+", label: "Clients served" },
+  { value: 500, suffix: "+", label: "Candidates placed" },
+  { value: 8, suffix: "", label: "Industries covered" },
 ];
 
 export const CORE_SERVICES = [
-  { title: "Business Consulting", text: "Strategy, restructuring and growth advisory." },
-  { title: "Recruitment & Executive Search", text: "Sourcing and assessing talent at every level." },
-  { title: "Staff Outsourcing", text: "Fully managed outsourced teams." },
-  { title: "Payroll Administration", text: "Accurate, compliant payroll every cycle." },
-  { title: "HR Advisory", text: "Policies, structures and people support." },
-  { title: "Training & Development", text: "Programmes that build capable teams." },
-  { title: "Company Secretarial & Compliance", text: "Regulatory filings and governance." },
-  { title: "Back-office Support", text: "Admin and operations handled for you." },
-];
+  {
+    slug: "recruitment-outsourcing",
+    title: "Recruitment & Outsourcing",
+    text: "Sourcing talent and managing outsourced teams under one accountable process.",
+  },
+  {
+    slug: "business-advisory",
+    title: "Business Advisory",
+    text: "Practical advice on strategy, structure and growth for leadership teams.",
+  },
+  {
+    slug: "background-checks",
+    title: "Background Checks",
+    text: "Thorough verification of identity, history and references before you hire.",
+  },
+  {
+    slug: "proof-of-funds",
+    title: "Proof of Funds",
+    text: "Credible documentation and verification support for funding and compliance needs.",
+  },
+  {
+    slug: "candidate-assessment-testing",
+    title: "Candidate Assessment and Testing",
+    text: "Structured assessments that show capability, fit and readiness for the role.",
+  },
+  {
+    slug: "training-service",
+    title: "Training Service",
+    text: "Targeted programmes that build skills, leadership and team performance.",
+  },
+  {
+    slug: "payroll-accounting-management",
+    title: "Payroll & Accounting Management",
+    text: "Accurate payroll and accounting support that keeps your operations compliant.",
+  },
+  {
+    slug: "security-services",
+    title: "Security Services",
+    text: "Reliable security staffing and support tailored to your site and risk profile.",
+  },
+] as const;
+
+export const SERVICE_NAV = CORE_SERVICES.map((s) => ({
+  to: "/services" as const,
+  hash: s.slug,
+  label: s.title,
+}));
 
 export const WHY_US = [
-  { title: "People-first approach", text: "We take time to understand your culture and goals." },
-  { title: "Rigorous screening", text: "Structured interviews, assessments and reference checks." },
-  { title: "One partner, many services", text: "Consulting, hiring and support under one roof." },
-  { title: "Confidential & compliant", text: "Your data and candidates' data handled with care." },
+  { title: "Quality Candidates", text: "We consistently attract and interact with the very best candidates." },
+  { title: "Prompt Service", text: "Staffing needs are always urgent and important. We respond accordingly." },
+  { title: "Extensive Search", text: "We source via social media, job boards, targeted search & recommendations." },
+  { title: "Cost Effective", text: "No ‘hidden costs’, we use a flexible cost model that is tailored to your needs." },
 ];
 
 export const PROCESS = [
@@ -43,24 +80,22 @@ export const PROCESS = [
 
 export const INDUSTRIES = ["Banking & Finance", "Oil & Gas", "Telecoms", "Manufacturing", "Healthcare", "Retail & FMCG", "Technology", "Public Sector"];
 
-// Placeholder testimonials — replace with real, permission-granted client quotes.
-export const TESTIMONIALS = [
-  { quote: "Sample testimonial text. Replace with a real quote from a client.", name: "Client Name", role: "Title, Company" },
-  { quote: "Sample testimonial text. Replace with a real quote from a client.", name: "Client Name", role: "Title, Company" },
-  { quote: "Sample testimonial text. Replace with a real quote from a client.", name: "Client Name", role: "Title, Company" },
-];
+const TESTIMONIAL_QUOTE =
+  "Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway.";
 
-export const INSIGHTS = [
-  { tag: "Recruitment", title: "How to write a job description that attracts the right candidates", date: "Coming soon" },
-  { tag: "Outsourcing", title: "When does outsourcing a function make sense for a growing business?", date: "Coming soon" },
-  { tag: "Careers", title: "Preparing your CV: what recruiters look for first", date: "Coming soon" },
+export const TESTIMONIALS = [
+  { quote: TESTIMONIAL_QUOTE, name: "Monty Moni", role: "CEO, Keen IT Solution", rating: 5 },
+  { quote: TESTIMONIAL_QUOTE, name: "Mike Hotten", role: "CEO, Brick Consulting", rating: 5 },
+  { quote: TESTIMONIAL_QUOTE, name: "John Bhai", role: "CEO, Brick Consulting", rating: 5 },
+  { quote: TESTIMONIAL_QUOTE, name: "Jorina Bibi", role: "CEO, Brick Consulting", rating: 5 },
+  { quote: TESTIMONIAL_QUOTE, name: "Delu Beta", role: "CEO, Brick Consulting", rating: 5 },
 ];
 
 export const FAQS = [
   { q: "How do I apply for a vacancy?", a: "Create a free account, upload your CV and click Apply on any open role. You can track your application in My Account." },
   { q: "How can my company post a job?", a: "Use the Post a Job button and fill in the vacancy form. Our team will contact you to confirm the details." },
   { q: "Do you charge job seekers?", a: "No. Creating an account and applying for jobs is free for candidates." },
-  { q: "Which services can I request?", a: "Consulting, recruitment, outsourcing, payroll, HR, training, compliance and back-office support." },
+  { q: "Which services can I request?", a: "Recruitment & outsourcing, business advisory, background checks, proof of funds, candidate assessment and testing, training, payroll & accounting management, and security services." },
   { q: "How quickly will you respond?", a: "Our team reviews every request and aims to respond promptly during business hours." },
 ];
 
@@ -104,37 +139,77 @@ export const VALUES = [
 // ============ What we do page ============
 
 export const SERVICE_OFFERINGS: Record<string, { includes: string[]; bestFor: string }> = {
-  "Business Consulting": {
-    includes: ["Strategy and growth planning", "Organisational design and restructuring", "Process and cost improvement", "Market entry and feasibility studies"],
-    bestFor: "Leadership teams at a turning point — scaling, restructuring or entering a new market.",
+  "Recruitment & Outsourcing": {
+    includes: [
+      "Permanent and contract recruitment",
+      "Executive and volume hiring",
+      "Managed outsourced teams",
+      "Onboarding, supervision and replacement cover",
+    ],
+    bestFor: "Organisations that need both strong hiring and reliable outsourced delivery.",
   },
-  "Recruitment & Executive Search": {
-    includes: ["Confidential executive search", "Mass, graduate and trainee recruitment", "Structured interviews and assessments", "Reference and background checks"],
-    bestFor: "Roles you cannot afford to get wrong, or hiring at volume against a deadline.",
+  "Business Advisory": {
+    includes: [
+      "Strategy and growth planning",
+      "Organisational design and restructuring",
+      "Process and cost improvement",
+      "Leadership decision support",
+    ],
+    bestFor: "Leadership teams who need clear advice before they invest time or money.",
   },
-  "Staff Outsourcing": {
-    includes: ["Fully managed outsourced teams", "Recruitment, contracts and day-one onboarding", "Supervision, performance and monthly reporting", "Replacement cover when someone leaves"],
-    bestFor: "Functions you would rather not run yourself — facilities, admin, sales support or customer care.",
+  "Background Checks": {
+    includes: [
+      "Identity and address verification",
+      "Employment and education checks",
+      "Criminal and reference screening",
+      "Clear reporting before offer stage",
+    ],
+    bestFor: "Roles where trust, compliance and risk control matter from day one.",
   },
-  "Payroll Administration": {
-    includes: ["Salary, tax and statutory deductions", "Benefits, loans and arrears processing", "Payslips, management reports and audit trail", "Payroll queries answered for your staff"],
-    bestFor: "Growing teams where payroll has become too risky or too time-consuming to run in-house.",
+  "Proof of Funds": {
+    includes: [
+      "Document review and verification support",
+      "Source-of-funds guidance",
+      "Compliance-ready evidence packs",
+      "Confidential handling of sensitive records",
+    ],
+    bestFor: "Clients who need credible proof of funds for transactions, partners or regulators.",
   },
-  "HR Advisory": {
-    includes: ["Employee handbooks and policy drafting", "Discipline, grievance and exit support", "HR health checks and compliance reviews", "Manager coaching and people planning"],
-    bestFor: "Businesses without a full-time HR lead who still need expert answers quickly.",
+  "Candidate Assessment and Testing": {
+    includes: [
+      "Competency and aptitude testing",
+      "Role-specific skills assessments",
+      "Structured interview support",
+      "Shortlist scoring and recommendations",
+    ],
+    bestFor: "Hiring managers who want evidence of ability before the final decision.",
   },
-  "Training & Development": {
-    includes: ["Skills gap analysis", "Leadership and management programmes", "Technical and soft-skills workshops", "Measuring impact after the training ends"],
-    bestFor: "Teams whose capability has not kept pace with the ambition of the business.",
+  "Training Service": {
+    includes: [
+      "Skills gap analysis",
+      "Leadership and soft-skills programmes",
+      "Technical workshops",
+      "Post-training impact review",
+    ],
+    bestFor: "Teams that need practical capability building, not generic classroom sessions.",
   },
-  "Company Secretarial & Compliance": {
-    includes: ["Annual returns, filings and statutory records", "Board and shareholder documentation", "Regulatory and licence tracking", "Governance advice and register upkeep"],
-    bestFor: "Directors who need filings and governance handled without building an in-house team.",
+  "Payroll & Accounting Management": {
+    includes: [
+      "Salary, tax and statutory processing",
+      "Payslips and audit-ready records",
+      "Bookkeeping and monthly reporting",
+      "Staff and management query handling",
+    ],
+    bestFor: "Businesses that want payroll and accounting run accurately without building a large in-house team.",
   },
-  "Back-office Support": {
-    includes: ["Administrative and clerical support", "Records, filing and data management", "Customer and supplier correspondence", "Routine reporting and daily operations"],
-    bestFor: "Founders and small teams spending the week on admin instead of growth.",
+  "Security Services": {
+    includes: [
+      "Trained security personnel",
+      "Site and access control support",
+      "Shift coverage and supervision",
+      "Incident reporting and escalation",
+    ],
+    bestFor: "Sites and organisations that need dependable people-focused security cover.",
   },
 };
 

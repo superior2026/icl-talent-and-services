@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { FadeLeft, FadeRight } from "@/components/motion";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/_authenticated/account")({
@@ -54,6 +55,7 @@ function Account() {
 
   return (
     <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2">
+      <FadeLeft>
       <section>
         <p className="eyebrow">My account</p>
         <h1 className="mt-3 text-4xl">{p.full_name || user.email}</h1>
@@ -73,6 +75,8 @@ function Account() {
           <p className="mt-2 text-xs text-muted-foreground">PDF or Word, up to 5MB.</p>
         </div>
       </section>
+      </FadeLeft>
+      <FadeRight>
       <section>
         <h2 className="mt-12 text-3xl">My applications</h2>
         <div className="mt-6 divide-y border-y">
@@ -88,6 +92,7 @@ function Account() {
           {apps.length === 0 && <p className="py-6 text-sm text-muted-foreground">No applications yet. <Link to="/jobs" className="text-primary">Browse vacancies</Link>.</p>}
         </div>
       </section>
+      </FadeRight>
     </div>
   );
 }

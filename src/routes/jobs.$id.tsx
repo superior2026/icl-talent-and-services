@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { FadeLeft, FadeRight, FadeUp } from "@/components/motion";
 import { supabase } from "@/integrations/supabase/client";
 import { useUser } from "@/lib/auth";
 
@@ -66,35 +67,76 @@ function JobDetail() {
 
   return (
     <div className="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:grid-cols-[1.5fr_1fr]">
-      <article>
-        <Link to="/jobs" className="text-sm text-muted-foreground">← All vacancies</Link>
-        <h1 className="mt-4 text-5xl">{job.title}</h1>
-        <p className="mt-3 text-muted-foreground">{job.company} · {job.location}</p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Badge variant="secondary">{job.category}</Badge><Badge variant="outline">{job.job_type}</Badge>
-          {job.salary && <Badge variant="outline">{job.salary}</Badge>}
-        </div>
-        <h2 className="mt-10 text-2xl">The role</h2>
-        <p className="mt-3 whitespace-pre-line text-muted-foreground">{job.description}</p>
-        {job.requirements && (<><h2 className="mt-8 text-2xl">Requirements</h2><p className="mt-3 whitespace-pre-line text-muted-foreground">{job.requirements}</p></>)}
-      </article>
-      <aside className="h-fit rounded-lg border bg-card p-6">
-        <h2 className="text-2xl">Apply</h2>
-        {!user ? (
-          <>
-            <p className="mt-2 text-sm text-muted-foreground">Sign in or create an account to apply with your CV.</p>
-            <Button asChild className="mt-4 w-full"><Link to="/auth">Sign in to apply</Link></Button>
-          </>
-        ) : applied ? (
-          <p className="mt-3 text-sm">You've applied for this role. Track it in <Link to="/account" className="font-semibold text-primary">My account</Link>.</p>
-        ) : (
-          <>
-            {!cvPath && <p className="mt-2 rounded bg-secondary p-3 text-sm">No CV on file. <Link to="/account" className="font-semibold text-primary">Upload your CV</Link> before applying.</p>}
-            <Textarea className="mt-4" rows={6} placeholder="Cover letter (optional)" value={cover} onChange={(e) => setCover(e.target.value)} maxLength={4000} />
-            <Button className="mt-4 w-full" disabled={busy || !cvPath} onClick={apply}>{busy ? "Submitting…" : "Submit application"}</Button>
-          </>
-        )}
-      </aside>
+      <FadeLeft>
+        <article>
+          <Link to="/jobs" className="text-sm text-muted-foreground">
+            ← All vacancies
+          </Link>
+          <h1 className="mt-4 text-5xl">{job.title}</h1>
+          <p className="mt-3 text-muted-foreground">
+            {job.company} · {job.location}
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Badge variant="secondary">{job.category}</Badge>
+            <Badge variant="outline">{job.job_type}</Badge>
+            {job.salary && <Badge variant="outline">{job.salary}</Badge>}
+          </div>
+          <FadeUp>
+            <h2 className="mt-10 text-2xl">The role</h2>
+            <p className="mt-3 whitespace-pre-line text-muted-foreground">{job.description}</p>
+          </FadeUp>
+          {job.requirements && (
+            <FadeUp>
+              <h2 className="mt-8 text-2xl">Requirements</h2>
+              <p className="mt-3 whitespace-pre-line text-muted-foreground">{job.requirements}</p>
+            </FadeUp>
+          )}
+        </article>
+      </FadeLeft>
+      <FadeRight>
+        <aside className="h-fit rounded-lg border bg-card p-6">
+          <h2 className="text-2xl">Apply</h2>
+          {!user ? (
+            <>
+              <p className="mt-2 text-sm text-muted-foreground">Sign in or create an account to apply with your CV.</p>
+              <Button asChild className="mt-4 w-full">
+                <Link to="/auth">Sign in to apply</Link>
+              </Button>
+            </>
+          ) : applied ? (
+            <p className="mt-3 text-sm">
+              You've applied for this role. Track it in{" "}
+              <Link to="/account" className="font-semibold text-primary">
+                My account
+              </Link>
+              .
+            </p>
+          ) : (
+            <>
+              {!cvPath && (
+                <p className="mt-2 rounded bg-secondary p-3 text-sm">
+                  No CV on file.{" "}
+                  <Link to="/account" className="font-semibold text-primary">
+                    Upload your CV
+                  </Link>{" "}
+                  before applying.
+                </p>
+              )}
+              <Textarea
+                className="mt-4"
+                rows={6}
+                placeholder="Cover letter (optional)"
+                value={cover}
+                onChange={(e) => setCover(e.target.value)}
+                maxLength={4000}
+              />
+              <Button className="mt-4 w-full" disabled={busy || !cvPath} onClick={apply}>
+                {busy ? "Submitting…" : "Submit application"}
+              </Button>
+            </>
+          )}
+        </aside>
+      </FadeRight>
     </div>
   );
 }

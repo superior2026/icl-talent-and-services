@@ -4,6 +4,8 @@ import { useState } from "react";
 import { MapPin } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { FadeUp, HeroItem, HeroReveal, Stagger, StaggerItem, motion, useReducedMotion } from "@/components/motion";
+import { fadeUp } from "@/lib/motion";
 import { supabase } from "@/integrations/supabase/client";
 
 export const jobsQuery = queryOptions({
@@ -32,23 +34,52 @@ function Jobs() {
   const { data: jobs } = useSuspenseQuery(jobsQuery);
   const [q, setQ] = useState("");
   const filtered = jobs.filter((j) => `${j.title} ${j.location} ${j.category}`.toLowerCase().includes(q.toLowerCase()));
+  const reduce = useReducedMotion();
+
   return (
     <div className="mx-auto max-w-5xl px-6 py-20">
-      <p className="eyebrow">Careers</p>
-      <h1 className="mt-3 text-5xl">Current vacancies</h1>
-      <Input placeholder="Search by title, location or category" value={q} onChange={(e) => setQ(e.target.value)} className="mt-8 h-12" />
-      <div className="mt-8 divide-y border-y">
+      <HeroReveal>
+        <HeroItem>
+          <p className="eyebrow">Careers</p>
+        </HeroItem>
+        <HeroItem>
+          <h1 className="mt-3 text-5xl">Current vacancies</h1>
+        </HeroItem>
+        <HeroItem>
+          <Input
+            placeholder="Search by title, location or category"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            className="mt-8 h-12"
+          />
+        </HeroItem>
+      </HeroReveal>
+      <Stagger className="mt-8 divide-y border-y" fast>
         {filtered.map((j) => (
-          <Link key={j.id} to="/jobs/$id" params={{ id: j.id }} className="group flex flex-wrap items-center justify-between gap-4 py-6">
-            <div>
-              <h2 className="text-2xl group-hover:text-primary">{j.title}</h2>
-              <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground"><MapPin className="h-4 w-4" />{j.location} · {j.company}</p>
-            </div>
-            <div className="flex gap-2"><Badge variant="secondary">{j.category}</Badge><Badge variant="outline">{j.job_type}</Badge></div>
-          </Link>
+          <StaggerItem key={j.id} variants={fadeUp}>
+            <motion.div whileHover={reduce ? undefined : { x: 4 }} transition={{ duration: 0.2 }}>
+              <Link to="/jobs/$id" params={{ id: j.id }} className="group flex flex-wrap items-center justify-between gap-4 py-6">
+                <div>
+                  <h2 className="text-2xl transition-colors group-hover:text-primary">{j.title}</h2>
+                  <p className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
+                    <MapPin className="h-4 w-4" />
+                    {j.location} · {j.company}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Badge variant="secondary">{j.category}</Badge>
+                  <Badge variant="outline">{j.job_type}</Badge>
+                </div>
+              </Link>
+            </motion.div>
+          </StaggerItem>
         ))}
-        {filtered.length === 0 && <p className="py-10 text-muted-foreground">No vacancies match your search.</p>}
-      </div>
+        {filtered.length === 0 && (
+          <FadeUp>
+            <p className="py-10 text-muted-foreground">No vacancies match your search.</p>
+          </FadeUp>
+        )}
+      </Stagger>
     </div>
   );
 }

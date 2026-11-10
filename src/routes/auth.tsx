@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FadeUp, HeroItem, HeroReveal } from "@/components/motion";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/auth")({
@@ -55,18 +56,49 @@ function Auth() {
 
   return (
     <div className="mx-auto max-w-md px-6 py-20">
-      <p className="eyebrow">Candidate & client portal</p>
-      <h1 className="mt-3 text-4xl">{mode === "up" ? "Create your account" : mode === "reset" ? "Reset password" : "Welcome back"}</h1>
-      <form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-lg border bg-card p-6">
-        {mode === "up" && <div className="space-y-2"><Label htmlFor="full_name">Full name</Label><Input id="full_name" name="full_name" required maxLength={120} /></div>}
-        <div className="space-y-2"><Label htmlFor="email">Email</Label><Input id="email" name="email" type="email" required /></div>
-        {mode !== "reset" && <div className="space-y-2"><Label htmlFor="password">Password</Label><Input id="password" name="password" type="password" minLength={8} required /></div>}
-        <Button type="submit" className="w-full" disabled={busy}>{busy ? "Please wait…" : mode === "up" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}</Button>
-      </form>
-      <div className="mt-4 flex justify-between text-sm">
-        <button className="text-primary" onClick={() => setMode(mode === "up" ? "in" : "up")}>{mode === "up" ? "Have an account? Sign in" : "New here? Create an account"}</button>
-        {mode === "in" && <button className="text-muted-foreground" onClick={() => setMode("reset")}>Forgot password?</button>}
-      </div>
+      <HeroReveal>
+        <HeroItem>
+          <p className="eyebrow">Candidate & client portal</p>
+        </HeroItem>
+        <HeroItem>
+          <h1 className="mt-3 text-4xl">
+            {mode === "up" ? "Create your account" : mode === "reset" ? "Reset password" : "Welcome back"}
+          </h1>
+        </HeroItem>
+      </HeroReveal>
+      <FadeUp>
+        <form onSubmit={onSubmit} className="mt-8 space-y-4 rounded-lg border bg-card p-6">
+          {mode === "up" && (
+            <div className="space-y-2">
+              <Label htmlFor="full_name">Full name</Label>
+              <Input id="full_name" name="full_name" required maxLength={120} />
+            </div>
+          )}
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input id="email" name="email" type="email" required />
+          </div>
+          {mode !== "reset" && (
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" name="password" type="password" minLength={8} required />
+            </div>
+          )}
+          <Button type="submit" className="w-full" disabled={busy}>
+            {busy ? "Please wait…" : mode === "up" ? "Create account" : mode === "reset" ? "Send reset link" : "Sign in"}
+          </Button>
+        </form>
+        <div className="mt-4 flex justify-between text-sm">
+          <button className="text-primary" onClick={() => setMode(mode === "up" ? "in" : "up")}>
+            {mode === "up" ? "Have an account? Sign in" : "New here? Create an account"}
+          </button>
+          {mode === "in" && (
+            <button className="text-muted-foreground" onClick={() => setMode("reset")}>
+              Forgot password?
+            </button>
+          )}
+        </div>
+      </FadeUp>
     </div>
   );
 }

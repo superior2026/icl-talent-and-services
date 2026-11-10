@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { FadeUp, Stagger, StaggerItem } from "@/components/motion";
+import { fadeUp } from "@/lib/motion";
 
 export function Section({
   eyebrow,
@@ -7,6 +9,7 @@ export function Section({
   dark = false,
   children,
   className = "",
+  id,
 }: {
   eyebrow: string;
   title: string;
@@ -14,16 +17,25 @@ export function Section({
   dark?: boolean;
   children: ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={className}>
+    <section id={id} className={className}>
       <div className="mx-auto max-w-7xl px-6 py-20">
-        <p className="eyebrow">{eyebrow}</p>
-        <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">{title}</h2>
-        {intro && (
-          <p className={"mt-4 max-w-2xl text-lg " + (dark ? "opacity-80" : "text-muted-foreground")}>{intro}</p>
-        )}
-        <div className="mt-12">{children}</div>
+        <Stagger>
+          <StaggerItem variants={fadeUp}>
+            <p className="eyebrow">{eyebrow}</p>
+          </StaggerItem>
+          <StaggerItem variants={fadeUp}>
+            <h2 className="mt-3 max-w-2xl text-4xl md:text-5xl">{title}</h2>
+          </StaggerItem>
+          {intro && (
+            <StaggerItem variants={fadeUp}>
+              <p className={"mt-4 max-w-2xl text-lg " + (dark ? "opacity-80" : "text-muted-foreground")}>{intro}</p>
+            </StaggerItem>
+          )}
+        </Stagger>
+        <FadeUp className="mt-12">{children}</FadeUp>
       </div>
     </section>
   );
